@@ -4,9 +4,7 @@ import api from "../services/api";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function AddClinic() {
-  const [clinicName, setClinicName] = useState("");
   const [doctorName, setDoctorName] = useState("");
-  const [registrationNumber, setRegistrationNumber] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
@@ -43,9 +41,8 @@ export default function AddClinic() {
      RESET FORM
   ======================== */
   const resetForm = () => {
-    setClinicName("");
     setDoctorName("");
-    setRegistrationNumber("");
+
     setContactNumber("");
     setEmail("");
     setWebsite("");
@@ -58,9 +55,8 @@ export default function AddClinic() {
   ======================== */
   const handleSave = async () => {
     if (
-      !clinicName ||
-      !doctorName ||
-      !registrationNumber ||
+          !doctorName ||
+    
       !contactNumber ||
       !email ||
       !address
@@ -72,8 +68,7 @@ export default function AddClinic() {
     const token = localStorage.getItem("access_token");
 
     const payload = {
-      hospital_name: clinicName.trim(),
-      license_name: registrationNumber.trim(),
+     
       doctor_name: doctorName.trim(), // create only
       contact_number: contactNumber.trim(),
       email: email.trim().toLowerCase(),
@@ -88,8 +83,7 @@ export default function AddClinic() {
         await api.put(
           `/super-admin/clinics/${editingClinicId}`,
           {
-            hospital_name: payload.hospital_name,
-            license_name: payload.license_name,
+            doctor_name: payload.doctor_name,
             contact_number: payload.contact_number,
             email: payload.email,
             clinic_address: payload.clinic_address,
@@ -126,14 +120,14 @@ export default function AddClinic() {
   const handleEdit = (c: any) => {
     setEditingClinicId(c.id);
 
-    setClinicName(c.hospital_name || "");
+   
     setDoctorName(
       c.doctor?.first_name
         ? `${c.doctor.first_name} ${c.doctor.last_name || ""}`.trim()
         : "",
     );
 
-    setRegistrationNumber(c.license_name || "");
+   
     setContactNumber(c.contact_number || "");
     setEmail(c.email || "");
     setAddress(c.clinic_address || "");
@@ -184,10 +178,10 @@ export default function AddClinic() {
 
           <div className="flex-1 min-w-0">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-cyan-600 to-blue-700 bg-clip-text text-transparent break-words">
-              Add New Clinic
+              Add New Doctor
             </h1>
             <p className="text-xs sm:text-sm text-gray-500 mt-1">
-              Super Admin can create and manage clinics
+              Super Admin can create and manage Doctors
             </p>
           </div>
         </div>
@@ -195,24 +189,24 @@ export default function AddClinic() {
         {/* FORM */}
         <div className="bg-white rounded-xl shadow-md p-4 sm:p-5 md:p-6 w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
-            <input
+            {/* <input
               value={clinicName}
               onChange={(e) => setClinicName(e.target.value)}
               placeholder="Clinic / Hospital Name"
               className="w-full px-3 sm:px-4 py-2 rounded-md border border-gray-400 text-gray-900 placeholder-gray-400 text-sm sm:text-base focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 outline-none transition"
-            />
+            /> */}
             <input
               value={doctorName}
               onChange={(e) => setDoctorName(e.target.value)}
               placeholder="Head Doctor Name"
               className="w-full px-3 sm:px-4 py-2 rounded-md border border-gray-400 text-gray-900 placeholder-gray-400 text-sm sm:text-base focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 outline-none transition"
             />
-            <input
+            {/* <input
               value={registrationNumber}
               onChange={(e) => setRegistrationNumber(e.target.value)}
               placeholder="Registration Number"
               className="w-full px-3 sm:px-4 py-2 rounded-md border border-gray-400 text-gray-900 placeholder-gray-400 text-sm sm:text-base focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 outline-none transition"
-            />
+            /> */}
             <input
               value={contactNumber}
               onChange={(e) => setContactNumber(e.target.value)}
@@ -345,7 +339,6 @@ export default function AddClinic() {
               <thead className="bg-gray-200 text-gray-800">
                 <tr>
                   <th className="p-3 text-left font-semibold">ID</th>
-                  <th className="p-3 text-left font-semibold">Hospital</th>
                   <th className="p-3 text-left font-semibold">Doctor</th>
                   <th className="p-3 text-left font-semibold">Email</th>
                   <th className="p-3 text-left font-semibold">Contact</th>
@@ -357,6 +350,7 @@ export default function AddClinic() {
                   <th className="p-3 text-left font-semibold">Actions</th>
                 </tr>
               </thead>
+            
 
               <tbody>
                 {clinics.map((c) => (
@@ -365,9 +359,7 @@ export default function AddClinic() {
                     className="border-t hover:bg-gray-50 transition"
                   >
                     <td className="p-3">{c.id}</td>
-                    <td className="p-3 font-medium">
-                      {c.hospital_name || "-"}
-                    </td>
+                  
                     <td className="p-3">
                       {c.doctor?.first_name
                         ? `${c.doctor.first_name} ${c.doctor.last_name || ""}`
