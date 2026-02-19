@@ -54,13 +54,7 @@ export default function AddClinic() {
      CREATE / UPDATE
   ======================== */
   const handleSave = async () => {
-    if (
-          !doctorName ||
-    
-      !contactNumber ||
-      !email ||
-      !address
-    ) {
+    if (!doctorName || !contactNumber || !email || !address) {
       toast.error("All required fields must be filled");
       return;
     }
@@ -68,7 +62,6 @@ export default function AddClinic() {
     const token = localStorage.getItem("access_token");
 
     const payload = {
-     
       doctor_name: doctorName.trim(), // create only
       contact_number: contactNumber.trim(),
       email: email.trim().toLowerCase(),
@@ -120,14 +113,12 @@ export default function AddClinic() {
   const handleEdit = (c: any) => {
     setEditingClinicId(c.id);
 
-   
     setDoctorName(
       c.doctor?.first_name
         ? `${c.doctor.first_name} ${c.doctor.last_name || ""}`.trim()
         : "",
     );
 
-   
     setContactNumber(c.contact_number || "");
     setEmail(c.email || "");
     setAddress(c.clinic_address || "");
@@ -245,8 +236,8 @@ export default function AddClinic() {
               {loading
                 ? "Saving..."
                 : editingClinicId
-                ? "Update Clinic"
-                : "Create Clinic"}
+                ? "Update Doctor"
+                : "Create Doctor"}
             </button>
           </div>
         </div>
@@ -307,7 +298,6 @@ export default function AddClinic() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">License</p>
                       <p className="break-words text-xs">
                         {c.license_name || "-"}
                       </p>
@@ -338,19 +328,17 @@ export default function AddClinic() {
             <table className="w-full border border-gray-300 text-sm">
               <thead className="bg-gray-200 text-gray-800">
                 <tr>
-                  <th className="p-3 text-left font-semibold">ID</th>
                   <th className="p-3 text-left font-semibold">Doctor</th>
                   <th className="p-3 text-left font-semibold">Email</th>
                   <th className="p-3 text-left font-semibold">Contact</th>
                   <th className="p-3 text-left font-semibold">AE Title</th>
-                  <th className="p-3 text-left font-semibold">License</th>
+
                   <th className="p-3 text-left font-semibold">MWL Port</th>
                   <th className="p-3 text-left font-semibold">Storage Port</th>
                   <th className="p-3 text-left font-semibold">Status</th>
                   <th className="p-3 text-left font-semibold">Actions</th>
                 </tr>
               </thead>
-            
 
               <tbody>
                 {clinics.map((c) => (
@@ -358,8 +346,6 @@ export default function AddClinic() {
                     key={c.id}
                     className="border-t hover:bg-gray-50 transition"
                   >
-                    <td className="p-3">{c.id}</td>
-                  
                     <td className="p-3">
                       {c.doctor?.first_name
                         ? `${c.doctor.first_name} ${c.doctor.last_name || ""}`
@@ -371,7 +357,6 @@ export default function AddClinic() {
                       {c.ae_title || "-"}
                     </td>
 
-                    <td className="p-3">{c.license_name || "-"}</td>
                     <td className="p-3">{c.dicom_mwl_port || "-"}</td>
                     <td className="p-3">{c.dicom_storage_port || "-"}</td>
                     <td className="p-3">
